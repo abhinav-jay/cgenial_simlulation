@@ -18,16 +18,19 @@ def calculate_intensity(theta2, theta3):
 def get_color(i):
     return [math.floor(255 * i), math.floor(255 * i), math.floor(255 * i)]
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((1920, 1080))
 clock = pygame.time.Clock()
 running = True
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
-fontObj = pygame.font.Font(None, 25)
+fontObj = pygame.font.Font(None, 35)
+slider = Slider(screen, 100, 600, 900, 40, min=1, max=90, step=1, color=(100,100,100))
+value = theta2
+
 
 while running:
-    dt = clock.tick(60) / 1000  # delta time, limited to 60 FPS
+    dt = clock.tick(20) / 1000  # delta time, limited to 200 FPS
 
     theta3 = math.radians(abs(math.degrees(theta2) - 90))
 
@@ -50,16 +53,21 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_h]:
-        theta2 -= math.radians(1)
-    if keys[pygame.K_l]:
-        theta2 += math.radians(1)
-
     screen.fill((0,0,0))
 
-    slider = Slider(screen, 100, 600, 800, 40, min=0, max=90, step=0.1)
-    theta2 = slider.getValue()
+    theta2 = math.radians(slider.getValue())
+
+    value = slider.getValue()
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_h]:
+        value -= dt * 30
+        value = value % 90
+    if keys[pygame.K_l]:
+        value += dt * 30
+        value = value % 90
+
+    slider.setValue(value)
 
     # write text
     screen.blit(text1, (10, 10))
@@ -67,13 +75,12 @@ while running:
     screen.blit(text3, (10, 50))
 
     # draw color rectangles
-    pygame.draw.rect(screen, color0, [0, 100, 320, 100])
-    pygame.draw.rect(screen, color1, [320, 100, 320, 100])
-    pygame.draw.rect(screen, color2, [640, 100, 320, 100])
-    pygame.draw.rect(screen, color3, [960, 100, 320, 100])
+    pygame.draw.rect(screen, color0, [0, 100, 480, 300])
+    pygame.draw.rect(screen, color1, [480, 100, 480, 300])
+    pygame.draw.rect(screen, color2, [960, 100, 480, 300])
+    pygame.draw.rect(screen, color3, [1440, 100, 480, 300])
 
-    # update y
-    pygame.display.flip()
+    # update
     pygame_widgets.update(events)
     pygame.display.update()
 
