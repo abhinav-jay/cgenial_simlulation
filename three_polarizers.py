@@ -90,14 +90,22 @@ while running:
     pygame.draw.rect(screen, color3, [1440, 100, 480, 300])
 
     # draw arrow
-    pygame.draw.polygon(screen, (200, 200, 100), (((0 + t), 200), ((0+t), 300), ((200+t), 300), ((200+t), 400), ((300+t), 250), ((200+t), 100), ((200+t), 200)))
+    if t in range(480):
+        pygame.draw.polygon(screen, (200, 200, 100), (((t-30), 220), ((t-30), 270), ((110+t), 270), ((110+t), 320), ((210+t), 255), ((110+t), 170), ((110+t), 220)))
+    if t in range(480,960):
+        pygame.draw.polygon(screen, (100, 100, 50), (((t-30), 220), ((t-30), 270), ((110+t), 270), ((110+t), 320), ((210+t), 255), ((110+t), 170), ((110+t), 220)))
+    if t in range(960,1440):
+        pygame.draw.polygon(screen, (math.floor(200*i2), math.floor(i2*200), math.floor(i2*100)), (((t-30), 220), ((t-30), 270), ((110+t), 270), ((110+t), 320), ((210+t), 255), ((110+t), 170), ((110+t), 220)))
+    if t > 1440:
+        pygame.draw.polygon(screen, (math.floor(200*i3), math.floor(i3*200), math.floor(i3*100)), (((t-30), 220), ((t-30), 270), ((110+t), 270), ((110+t), 320), ((210+t), 255), ((110+t), 170), ((110+t), 220)))
+
 
     # update
     pygame_widgets.update(events)
     pygame.display.update()
     t += 30
-    #
-    # if t > 2000:
-    #     t = 30
+
+    if t > 2000:
+        t = 30
 
 pygame.quit()
