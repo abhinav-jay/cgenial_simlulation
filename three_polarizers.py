@@ -19,7 +19,7 @@ def calculate_intensity(theta2, theta3):
 def get_color(i):
     return [math.floor(255 * i), math.floor(255 * i), math.floor(255 * i)]
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((1820, 980))
 pygame.display.set_caption('trois polariseurs')
 clock = pygame.time.Clock()
 running = True
